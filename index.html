@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Digital Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg-deep:#020408;--bg-dark:#060d1a;--bg-mid:#0a1628;
+  --cyan:#00d4ff;--cyan2:#00a8cc;
+  --neon-green:#00ff88;--neon-red:#ff3366;--neon-gold:#ffd700;
+  --text:#e8f4ff;--text2:#8ab0d0;
+  --border:rgba(0,212,255,0.18);--border2:rgba(0,212,255,0.40);
+  --glass:rgba(8,25,55,0.75);
+  --shadow-card:0 8px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(0,212,255,0.10);
+  --radius:12px;--radius-sm:8px;--radius-lg:18px;
+  --ease:0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-head:'Orbitron',sans-serif;--font-body:'Poppins',sans-serif;--font-mono:'Share Tech Mono',monospace;
+  --form-bg:#f5f7fa;--form-border:#d0dce8;--form-text:#1a2a3a;--form-text2:#4a6070;
+  --form-focus:#0099cc;--form-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body,input,select,textarea,button{font-family:var(--font-body)!important;}
+body{background:var(--bg-deep);color:var(--text);font-size:15px;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+#tech-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+body::before{content:'';position:fixed;inset:0;z-index:1;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+
+/* HEADER */
+.header{position:relative;z-index:20;text-align:center;padding:28px 20px 20px;background:linear-gradient(180deg,rgba(0,30,60,0.95) 0%,rgba(2,4,8,0.7) 100%);border-bottom:1px solid var(--border2);box-shadow:0 4px 30px rgba(0,0,0,0.5),0 1px 0 rgba(0,212,255,0.2);backdrop-filter:blur(12px);}
+.header-eyebrow{font-family:var(--font-mono);font-size:0.62rem;color:var(--cyan);letter-spacing:0.5em;text-transform:uppercase;margin-bottom:8px;opacity:0.8;}
+.header-title{font-family:var(--font-head);font-size:clamp(1.1rem,4vw,2.2rem);font-weight:900;letter-spacing:0.12em;color:#fff;text-shadow:0 0 20px rgba(0,212,255,0.5),0 0 60px rgba(0,212,255,0.2);display:inline-block;}
+.header-title::after{content:'';display:block;height:2px;margin:8px auto 0;width:60%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);animation:line-pulse 3s ease-in-out infinite;}
+@keyframes line-pulse{0%,100%{width:30%;opacity:0.4;}50%{width:75%;opacity:1;}}
+.header-sub{font-size:0.72rem;color:var(--text2);letter-spacing:0.25em;margin-top:6px;text-transform:uppercase;font-weight:500;}
+
+/* TABS */
+.tabs{position:relative;z-index:20;display:flex;justify-content:center;padding:14px 20px;background:rgba(2,4,8,0.85);border-bottom:1px solid var(--border);gap:10px;backdrop-filter:blur(10px);}
+.tab-btn{font-size:0.78rem;font-weight:600;letter-spacing:0.06em;padding:9px 28px;border:1.5px solid #d0dce8;border-radius:var(--radius-sm);background:#F5F5F5;color:#111;cursor:pointer;transition:all var(--ease);text-transform:uppercase;}
+.tab-btn:hover{border-color:var(--cyan2);color:#006688;transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,153,204,0.25);}
+.tab-btn.active{background:#fff;border-color:var(--cyan);color:#006688;font-weight:700;box-shadow:0 0 16px rgba(0,212,255,0.35);}
+
+/* MAIN */
+.main{position:relative;z-index:10;max-width:900px;margin:0 auto;padding:30px 20px;flex:1;width:100%;}
+
+/* DARK PANEL */
+.panel{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-lg);padding:38px;box-shadow:var(--shadow-card);backdrop-filter:blur(20px);animation:panel-in 0.45s cubic-bezier(0.4,0,0.2,1) both;position:relative;overflow:hidden;}
+.panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.5),transparent);}
+@keyframes panel-in{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+/* LIGHT PANEL */
+.panel-light{background:var(--form-bg);border:1px solid var(--form-border);border-radius:var(--radius-lg);padding:38px;box-shadow:0 4px 24px rgba(0,0,0,0.18);animation:panel-in 0.45s cubic-bezier(0.4,0,0.2,1) both;position:relative;overflow:hidden;}
+.panel-light::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0099cc,#00d4ff,#0099cc);border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+
+.panel-title{font-family:var(--font-head);font-size:0.75rem;color:#F5F5F5;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.panel-title::before{content:'';width:8px;height:8px;background:var(--cyan);border-radius:50%;flex-shrink:0;box-shadow:0 0 8px var(--cyan);animation:dot-pulse 2s ease-in-out infinite;}
+@keyframes dot-pulse{0%,100%{box-shadow:0 0 4px var(--cyan);}50%{box-shadow:0 0 12px var(--cyan),0 0 24px rgba(0,212,255,0.3);}}
+.panel-title-light{font-family:var(--font-head);font-size:0.75rem;color:#003d52;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--form-border);display:flex;align-items:center;gap:10px;}
+.panel-title-light::before{content:'';width:8px;height:8px;background:var(--form-focus);border-radius:50%;flex-shrink:0;box-shadow:0 0 8px rgba(0,153,204,0.5);}
+
+/* FORM ELEMENTS */
+.panel .form-group,.panel-light .form-group{margin-bottom:18px;}
+.panel label{display:block;font-size:0.72rem;font-weight:600;color:#F5F5F5;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:7px;}
+.panel input[type="text"],.panel input[type="password"],.panel input[type="date"],.panel input[type="number"],.panel select,.panel textarea{width:100%;background:#fff;border:1.5px solid var(--form-border);border-radius:var(--radius-sm);color:#111;font-size:0.9rem;font-weight:500;padding:11px 14px;outline:none;box-shadow:0 2px 10px rgba(0,0,0,0.25);transition:border-color var(--ease),box-shadow var(--ease);}
+.panel input::placeholder,.panel textarea::placeholder{color:#666;}
+.panel input:focus,.panel select:focus,.panel textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.25);}
+.panel select option{background:#fff;color:#111;}
+.panel textarea{resize:vertical;min-height:72px;}
+.panel-light label{display:block;font-size:0.72rem;font-weight:700;color:#2a3f50;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:7px;}
+.panel-light input[type="text"],.panel-light input[type="date"],.panel-light input[type="number"],.panel-light select,.panel-light textarea{width:100%;background:#fff;border:1.5px solid var(--form-border);border-radius:var(--radius-sm);color:#111;font-size:0.9rem;font-weight:500;padding:11px 14px;outline:none;transition:border-color var(--ease),box-shadow var(--ease);box-shadow:var(--form-shadow);}
+.panel-light input::placeholder,.panel-light textarea::placeholder{color:#666;}
+.panel-light input:focus,.panel-light select:focus,.panel-light textarea:focus{border-color:var(--form-focus);box-shadow:0 0 0 3px rgba(0,153,204,0.15);}
+.panel-light select option{background:#fff;color:#111;}
+.panel-light textarea{resize:vertical;min-height:72px;}
+
+/* STATS */
+.panel-light .stat-box{background:#fff;border:1px solid var(--form-border);border-radius:var(--radius);padding:16px 10px;text-align:center;transition:all var(--ease);box-shadow:var(--form-shadow);}
+.panel-light .stat-box:hover{border-color:#0099cc;box-shadow:0 4px 16px rgba(0,153,204,0.15);transform:translateY(-3px);}
+.panel-light .stat-num{font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:#1a2a3a;line-height:1;}
+.panel-light .stat-lbl{font-size:0.62rem;font-weight:600;color:var(--form-text2);letter-spacing:0.12em;margin-top:5px;text-transform:uppercase;}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+
+/* BUTTONS */
+.btn{font-size:0.78rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:11px 24px;border:1px solid transparent;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--ease);}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:linear-gradient(135deg,#0099cc,#006699);color:#fff;border-color:#0099cc;box-shadow:0 2px 8px rgba(0,153,204,0.3);}
+.btn-primary:hover{background:linear-gradient(135deg,#00b3e6,#0080aa);transform:translateY(-2px);}
+.btn-danger{background:rgba(255,51,102,0.08);color:var(--neon-red);border-color:rgba(255,51,102,0.35);}
+.btn-danger:hover{background:rgba(255,51,102,0.16);transform:translateY(-2px);}
+.btn-gold{background:rgba(255,215,0,0.08);color:var(--neon-gold);border-color:rgba(255,215,0,0.35);}
+.btn-gold:hover{background:rgba(255,215,0,0.16);transform:translateY(-2px);}
+
+/* LOGIN BTN */
+#login-btn{min-width:120px;display:flex;align-items:center;justify-content:center;gap:6px;}
+#login-btn .btn-check{display:none;font-size:1.1rem;}
+#login-btn.success-state{background:linear-gradient(135deg,rgba(0,255,136,0.2),rgba(0,180,80,0.25))!important;border-color:var(--neon-green)!important;color:var(--neon-green)!important;pointer-events:none;}
+#login-btn.success-state .btn-check{display:inline-block;}
+#login-btn.success-state .btn-label{opacity:0;width:0;overflow:hidden;}
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+#login-btn.error-shake{animation:shake 0.45s ease;border-color:var(--neon-red)!important;}
+
+/* ALERTS */
+.alert{padding:11px 15px;margin-bottom:15px;font-size:0.78rem;font-weight:500;border-radius:var(--radius-sm);border-left:3px solid;display:none;}
+.alert.show{display:block;}
+.alert-err{border-color:var(--neon-red);color:#cc2244;background:rgba(255,51,102,0.08);}
+.alert-ok{border-color:#009944;color:#007733;background:rgba(0,200,100,0.08);}
+.panel .alert-err{color:#ff8fa8;background:rgba(255,51,102,0.14);border-color:#ff3366;}
+.panel .alert-ok{color:#7dffc0;background:rgba(0,255,136,0.12);border-color:#00ff88;}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:540px){.grid-2{grid-template-columns:1fr;}}
+.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:22px 0;}
+.panel-light .divider{height:1px;background:var(--form-border);border:none;margin:22px 0;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;align-items:center;}
+.update-notice{font-size:0.74rem;font-weight:600;color:#003d52;background:rgba(0,153,204,0.10);border:1.5px solid rgba(0,153,204,0.35);border-radius:var(--radius-sm);padding:8px 14px;margin-bottom:16px;display:none;}
+.update-notice.show{display:block;}
+
+/* ADMIN TOOLBAR */
+.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px;}
+.search-box{flex:1;min-width:180px;background:#fff;border:1.5px solid var(--form-border);border-radius:var(--radius-sm);color:#111;font-size:0.85rem;font-weight:500;padding:9px 14px;outline:none;transition:border-color var(--ease);box-shadow:var(--form-shadow);}
+.search-box:focus{border-color:var(--form-focus);box-shadow:0 0 0 3px rgba(0,153,204,0.15);}
+.search-box::placeholder{color:#666;}
+.filter-btns{display:flex;gap:6px;}
+.filter-btn{font-size:0.7rem;font-weight:700;padding:7px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--form-border);background:#fff;color:#2a3f50;cursor:pointer;transition:all var(--ease);text-transform:uppercase;letter-spacing:0.05em;box-shadow:var(--form-shadow);}
+.filter-btn:hover,.filter-btn.active{border-color:var(--form-focus);color:#fff;background:var(--form-focus);}
+.sort-select{font-size:0.75rem;font-weight:500;padding:7px 10px;border-radius:var(--radius-sm);border:1.5px solid var(--form-border);background:#fff;color:#111;cursor:pointer;outline:none;box-shadow:var(--form-shadow);}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:8px;}
+
+/* ── ADMIN STUDENT CARD — off-white ── */
+.s-card{background:#faf9f7;border:1px solid #e4ddd4;border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all var(--ease);position:relative;animation:card-in 0.4s ease both;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+@keyframes card-in{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.s-card:hover{border-color:#b8a99a;box-shadow:0 6px 24px rgba(0,0,0,0.12);transform:translateY(-4px);}
+.s-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c8a87a,#e8c99a);opacity:0;transition:opacity var(--ease);}
+.s-card:hover::before{opacity:1;}
+.s-card-header{display:flex;align-items:center;gap:12px;padding:14px 14px 10px;}
+.s-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f0ebe4,#e0d5c8);border:1px solid #d0c5b8;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.85rem;font-weight:700;color:#8b6a4f;flex-shrink:0;}
+.s-card-info{flex:1;min-width:0;}
+.s-card-name{font-size:0.92rem;font-weight:600;color:#2a1f14;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.s-card-serial{font-family:var(--font-mono);font-size:0.68rem;color:#8b6a4f;margin-top:2px;}
+.s-card-badge{font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.05em;flex-shrink:0;}
+.badge-pass{background:rgba(0,160,70,0.10);color:#005c28;border:1px solid rgba(0,160,70,0.28);}
+.badge-fail{background:rgba(190,0,40,0.08);color:#8b0020;border:1px solid rgba(190,0,40,0.22);}
+.badge-pending{background:rgba(160,140,110,0.12);color:#5a4a30;border:1px solid rgba(160,140,110,0.25);}
+.s-card-body{padding:4px 14px 12px;}
+.s-card-course{font-size:0.75rem;color:#6a5840;font-weight:500;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.s-progress-top{display:flex;justify-content:space-between;font-size:0.68rem;color:#7a6050;margin-bottom:4px;}
+.s-progress-bar{height:4px;background:#e8e0d8;border-radius:2px;overflow:hidden;}
+.s-progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#8b6a4f,#c8a07a);transition:width 0.6s ease;}
+.s-progress-fill.fail{background:linear-gradient(90deg,#aa2233,#dd4455);}
+.s-card-date{font-size:0.65rem;color:#8a7060;margin-top:6px;}
+.s-expand{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+.s-expand.open{max-height:700px;border-top:1px solid #e4ddd4;}
+.s-expand-inner{padding:16px 14px;background:#f5f2ee;}
+.s-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.s-detail-label{font-size:0.65rem;color:#7a6050;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
+.s-detail-val{font-size:0.82rem;color:#2a1f14;font-weight:600;}
+.s-expand-btns{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* image thumb in card */
+.s-card-img-thumb{width:100%;max-height:110px;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid #e4ddd4;cursor:pointer;transition:transform 0.2s;}
+.s-card-img-thumb:hover{transform:scale(1.02);}
+
+.add-student-btn{display:flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px dashed #0099cc;background:rgba(0,153,204,0.05);color:#0077aa;cursor:pointer;transition:all var(--ease);text-transform:uppercase;letter-spacing:0.06em;}
+.add-student-btn:hover{background:rgba(0,153,204,0.12);}
+.no-records-msg{text-align:center;padding:40px 20px;color:#5a7a90;font-weight:500;font-size:0.85rem;}
+.no-records-msg .icon{font-size:2rem;margin-bottom:10px;opacity:0.4;}
+
+/* ===== STUDENT LOOKUP PANEL ===== */
+/* Computer SVG decorations on the right side */
+.lookup-inner{position:relative;overflow:hidden;}
+.lookup-deco{position:absolute;right:-10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:18px;opacity:0.13;pointer-events:none;z-index:0;}
+.lookup-deco svg{display:block;}
+.lookup-content{position:relative;z-index:1;}
+
+/* ===== PREMIUM RESULT CARD ===== */
+#view-report{animation:panel-in 0.5s ease both;}
+.rc-wrapper{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05);}
+
+/* Gradient Header with computer images */
+.rc-header{
+  background:linear-gradient(135deg,#1e3a8a 0%,#4c1d95 50%,#1e3a8a 100%);
+  padding:2rem 2rem 1.75rem;
+  position:relative;overflow:hidden;
+}
+.rc-header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.06);}
+.rc-header::after{content:'';position:absolute;bottom:-80px;left:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04);}
+
+/* Computer deco images on right side of header */
+.rc-header-computers{
+  position:absolute;right:0;top:0;bottom:0;
+  display:flex;align-items:center;gap:8px;
+  padding-right:16px;
+  opacity:0.12;
+  pointer-events:none;
+  z-index:0;
+}
+.rc-header-computers svg{display:block;flex-shrink:0;}
+
+.rc-header-inner{position:relative;z-index:1;display:flex;align-items:center;gap:16px;}
+.rc-header-icon{width:52px;height:52px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.rc-header-title{font-family:var(--font-head);font-size:clamp(1.2rem,3vw,1.6rem);font-weight:900;color:#fff;letter-spacing:0.08em;margin:0;text-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.rc-header-sub{font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);letter-spacing:0.15em;text-transform:uppercase;margin:4px 0 0;}
+.rc-serial-strip{position:relative;z-index:1;margin-top:18px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:7px 18px;}
+.rc-serial-dot{width:7px;height:7px;border-radius:50%;background:#00d4ff;box-shadow:0 0 8px #00d4ff;animation:dot-pulse 2s infinite;}
+.rc-serial-label{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.15em;}
+.rc-serial-val{font-family:var(--font-mono);font-size:13px;color:#fff;font-weight:700;}
+
+/* Card Body */
+.rc-body{background:#f5f7fa;padding:1.5rem;}
+.rc-section{margin-bottom:14px;}
+.rc-info-card{background:#fff;border:1px solid #e2eaf2;border-radius:14px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.rc-section-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.rc-section-lbl i{font-size:13px;color:#6366f1;}
+.rc-name-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.rc-student-name{font-size:clamp(1.1rem,3vw,1.4rem);font-weight:700;color:#0f172a;margin:0;line-height:1.2;}
+.rc-date-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#4c1d95;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;white-space:nowrap;border:1px solid #c4b5fd;}
+.rc-date-badge i{font-size:11px;}
+.rc-val{font-size:14px;font-weight:600;color:#0f172a;margin:0;}
+.rc-notes-val{font-size:13px;color:#475569;line-height:1.65;margin:0;}
+
+/* Status badges */
+.rc-status-row{display:flex;gap:8px;flex-wrap:wrap;}
+.rc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;letter-spacing:0.04em;}
+.rb-complete{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+.rb-pending{background:#fef3c7;color:#78350f;border:1px solid #fcd34d;}
+.rb-pass{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+.rb-fail{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+
+/* Stats grid */
+.rc-stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+@media(max-width:520px){.rc-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.rc-stat{background:#fff;border:1px solid #e2eaf2;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:transform 0.2s,box-shadow 0.2s;}
+.rc-stat:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.10);}
+.rc-stat-icon{font-size:22px;margin-bottom:7px;}
+.rc-stat-num{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:700;color:#0f172a;line-height:1;}
+.rc-stat-lbl{font-size:9px;font-weight:700;color:#94a3b8;margin-top:4px;text-transform:uppercase;letter-spacing:0.08em;}
+
+/* Stars */
+.rc-stars-card{background:#fff;border:1px solid #e2eaf2;border-radius:14px;padding:16px;text-align:center;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.rc-stars-row{display:flex;align-items:center;justify-content:center;gap:4px;margin:8px 0 5px;}
+.rc-star{font-size:28px;transition:transform 0.15s;}
+.rc-star.filled{color:#f59e0b;text-shadow:0 0 8px rgba(245,158,11,0.5);}
+.rc-star.empty{color:#e2eaf2;}
+.rc-stars-num{font-size:13px;font-weight:600;color:#64748b;}
+.rc-stars-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.rc-stars-lbl i{font-size:13px;color:#f59e0b;}
+
+/* Result Banner — with computer bg images */
+.rc-result-banner{
+  border-radius:16px;padding:1.75rem 1.5rem;
+  text-align:center;position:relative;overflow:hidden;
+  margin-bottom:14px;
+}
+.rc-result-banner.pass-bg{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);border:2px solid #34d399;}
+.rc-result-banner.fail-bg{background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);border:2px solid #f87171;}
+
+/* computer SVG watermarks inside banner */
+.rc-banner-computers{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 10px;
+  pointer-events:none;
+  z-index:0;
+  opacity:0.1;
+}
+.rc-banner-computers svg{display:block;}
+
+.rc-result-icon{font-size:40px;margin-bottom:8px;position:relative;z-index:1;}
+.rc-result-title{font-family:var(--font-head);font-size:clamp(1.6rem,5vw,2.4rem);font-weight:900;letter-spacing:0.1em;margin:0 0 6px;position:relative;z-index:1;}
+.pass-bg .rc-result-title{color:#065f46;}
+.fail-bg .rc-result-title{color:#991b1b;}
+.rc-result-sub{font-size:13px;font-weight:600;margin:0 0 8px;position:relative;z-index:1;}
+.pass-bg .rc-result-sub{color:#047857;}
+.fail-bg .rc-result-sub{color:#b91c1c;}
+
+/* Performance verdict label */
+.rc-perf-label{
+  display:inline-block;
+  font-family:var(--font-head);
+  font-size:clamp(0.75rem,2vw,1rem);
+  font-weight:700;letter-spacing:0.15em;
+  padding:6px 20px;border-radius:30px;
+  position:relative;z-index:1;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+.perf-excellent{background:rgba(5,150,105,0.18);color:#047857;border:1.5px solid #34d399;}
+.perf-bad{background:rgba(185,28,28,0.15);color:#991b1b;border:1.5px solid #f87171;}
+
+/* Signature */
+.rc-signature{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;padding:14px 16px;background:#fff;border:1px solid #e2eaf2;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.sig-issued{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;font-weight:600;}
+.sig-name{font-family:var(--font-head);font-size:0.95rem;font-weight:700;color:#1e3a8a;}
+.sig-phone{font-size:12px;color:#64748b;margin-top:2px;}
+.sig-stamp{width:60px;height:60px;border:2px solid #c7d2fe;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ede9fe,#e0e7ff);flex-shrink:0;font-size:10px;text-align:center;font-family:var(--font-head);color:#3730a3;line-height:1.4;font-weight:700;letter-spacing:0.02em;}
+
+/* IMAGE UPLOAD */
+.img-upload-box{border:2px dashed var(--form-border);border-radius:var(--radius);padding:18px 14px;text-align:center;cursor:pointer;transition:border-color var(--ease),background var(--ease);background:#fff;position:relative;}
+.img-upload-box:hover{border-color:var(--form-focus);background:rgba(0,153,204,0.04);}
+.img-upload-box input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-upload-box .up-icon{font-size:1.6rem;margin-bottom:6px;opacity:0.5;}
+.img-upload-box .up-text{font-size:0.75rem;color:var(--form-text2);font-weight:500;}
+.img-preview-wrap{margin-top:10px;position:relative;display:none;}
+.img-preview-wrap img{width:100%;max-height:160px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--form-border);}
+.img-remove-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(255,51,102,0.85);color:#fff;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;line-height:1;transition:background var(--ease);}
+.img-remove-btn:hover{background:#ff3366;}
+
+/* REPORT IMAGE SECTION */
+.rc-img-section{margin-top:14px;}
+.rc-img-thumb{width:100%;max-height:220px;object-fit:cover;border-radius:12px;border:1px solid #e2eaf2;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.rc-img-thumb:hover{transform:scale(1.01);box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+.rc-img-hint{font-size:11px;color:var(--form-text2);text-align:center;margin-top:5px;opacity:0.7;}
+
+/* LIGHTBOX */
+.lightbox-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:20px;}
+.lightbox-overlay.open{display:flex;}
+.lightbox-img{max-width:92vw;max-height:80vh;object-fit:contain;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,0.8);animation:lb-in 0.3s cubic-bezier(0.4,0,0.2,1) both;}
+@keyframes lb-in{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
+.lightbox-close{position:fixed;top:18px;right:20px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--ease);z-index:10001;}
+.lightbox-close:hover{background:rgba(255,51,102,0.6);}
+.lightbox-actions{display:flex;gap:10px;}
+
+/* FOOTER */
+.site-footer{position:relative;z-index:20;text-align:center;padding:16px 20px;background:rgba(2,4,8,0.9);border-top:1px solid var(--border);font-size:0.75rem;color:#8ab0d0;line-height:1.9;font-weight:500;backdrop-filter:blur(10px);}
+.site-footer .f-name{color:var(--cyan);font-weight:700;}
+.hidden{display:none!important;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg-dark);}
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.3);border-radius:3px;}
+
+@media(max-width:600px){
+  .panel,.panel-light{padding:22px 16px;}
+  .rc-body{padding:1rem;}
+  .rc-header{padding:1.5rem 1.25rem 1.25rem;}
+  .cards-grid{grid-template-columns:1fr;}
+  .admin-toolbar{flex-direction:column;}
+  .filter-btns{flex-wrap:wrap;}
+  .rc-header-computers{display:none;}
+  .lookup-deco{display:none;}
+}
+@media print{
+  #tech-canvas,body::before,.tabs,.main>:not(#view-report),.btn-row,.site-footer,.lightbox-overlay{display:none!important;}
+  body{background:#fff!important;}
+  #view-report{display:block!important;}
+  .rc-wrapper{box-shadow:none!important;}
+  *{animation:none!important;}
+}
+</style>
+</head>
+<body>
+<canvas id="tech-canvas"></canvas>
+<header class="header">
+  <div class="header-eyebrow">■ System Online ■</div>
+  <div class="header-title">AHMED DIGITAL COURSE</div>
+  <div class="header-sub">Student Management System</div>
+</header>
+<div class="tabs">
+  <button class="tab-btn active" id="tab-admin" onclick="switchTab('admin')">Admin Portal</button>
+  <button class="tab-btn" id="tab-student" onclick="switchTab('student')">SR Number</button>
+</div>
+<div class="main">
+
+  <!-- ADMIN LOGIN -->
+  <div id="view-admin-login" class="panel">
+    <div class="panel-title">Admin Authentication</div>
+    <div class="alert alert-err" id="login-err">⚠ Wrong password. Try again.</div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') adminLogin()">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="login-btn" onclick="adminLogin()">
+        <span class="btn-label">Login</span>
+        <span class="btn-check">✓</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="view-admin-dashboard" class="panel-light hidden">
+    <div class="panel-title-light">Admin Dashboard</div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Total</div></div>
+      <div class="stat-box"><div class="stat-num" id="s-pass" style="color:#007733">0</div><div class="stat-lbl">Passed</div></div>
+      <div class="stat-box"><div class="stat-num" id="s-fail" style="color:#cc2244">0</div><div class="stat-lbl">Failed</div></div>
+      <div class="stat-box"><div class="stat-num" id="s-pend" style="color:#4a6070">0</div><div class="stat-lbl">Pending</div></div>
+    </div>
+    <hr class="divider">
+    <div class="panel-title-light" style="margin-bottom:14px">Add / Edit Record</div>
+    <div class="update-notice" id="update-notice">⟳ Updating existing record — SR: <strong id="editing-sr"></strong></div>
+    <div class="grid-2">
+      <div class="form-group"><label>SR Number *</label><input type="text" id="f-serial" placeholder="e.g. ADC-001" oninput="checkExisting()"></div>
+      <div class="form-group"><label>Student Name *</label><input type="text" id="f-name" placeholder="Full name"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Date</label><input type="date" id="f-date"></div>
+      <div class="form-group"><label>Task / Course Name</label><input type="text" id="f-task" placeholder="e.g. Photoshop Basics"></div>
+    </div>
+    <div class="form-group"><label>Notes / Remarks</label><textarea id="f-notes" placeholder="Additional comments..."></textarea></div>
+    <div class="grid-2">
+      <div class="form-group"><label>Status</label><select id="f-status"><option value="complete">Complete</option><option value="incomplete">Incomplete</option></select></div>
+      <div class="form-group"><label>Pass / Fail</label><select id="f-result"><option value="pass">Pass</option><option value="fail">Fail</option></select></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Points Obtained</label><input type="number" id="f-points" placeholder="e.g. 85" min="0" max="100"></div>
+      <div class="form-group"><label>Wrong Answers</label><input type="number" id="f-wrong" placeholder="e.g. 5" min="0"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Total Questions</label><input type="number" id="f-total" placeholder="e.g. 50" min="0"></div>
+      <div class="form-group"><label>Star Rating</label>
+        <select id="f-stars">
+          <option value="1">⭐ 1 Star</option>
+          <option value="2">⭐⭐ 2 Stars</option>
+          <option value="3">⭐⭐⭐ 3 Stars</option>
+          <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+          <option value="5" selected>⭐⭐⭐⭐⭐ 5 Stars</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:4px;">
+      <label>📷 Test Progress Image</label>
+      <div class="img-upload-box" id="img-upload-box">
+        <input type="file" id="f-image" accept="image/*" onchange="previewImage(this)">
+        <div class="up-icon">🖼️</div>
+        <div class="up-text">Test Progress Image — Click ya drag karein</div>
+      </div>
+      <div class="img-preview-wrap" id="img-preview-wrap">
+        <img id="img-preview" src="" alt="preview">
+        <button class="img-remove-btn" onclick="removeImage()" title="Remove image">✕</button>
+      </div>
+    </div>
+    <div class="alert alert-ok" id="save-ok">✔ Record saved successfully!</div>
+    <div class="alert alert-err" id="save-err">⚠ SR Number and Name are required.</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="saveRecord()">Save / Update</button>
+      <button class="btn btn-danger" onclick="clearForm()">Clear</button>
+      <button class="btn btn-danger" style="margin-left:auto" onclick="adminLogout()">Logout</button>
+    </div>
+    <hr class="divider">
+    <div class="panel-title-light" style="margin-bottom:16px">All Records</div>
+    <div class="admin-toolbar">
+      <input type="text" class="search-box" id="admin-search" placeholder="Search by name or SR number…" oninput="renderList()">
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" onclick="setFilter('complete',this)">Completed</button>
+        <button class="filter-btn" onclick="setFilter('incomplete',this)">Pending</button>
+      </div>
+      <select class="sort-select" id="admin-sort" onchange="renderList()">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: Name</option>
+        <option value="date">Sort: Date</option>
+        <option value="score">Sort: Score</option>
+      </select>
+      <button class="add-student-btn" onclick="clearForm();window.scrollTo({top:0,behavior:'smooth'})"><span>+</span> Add Student</button>
+    </div>
+    <div class="cards-grid" id="admin-list">
+      <div class="no-records-msg"><div class="icon">◈</div>No records yet. Add your first student above.</div>
+    </div>
+  </div>
+
+  <!-- STUDENT LOOKUP — with computer deco on right -->
+  <div id="view-student-lookup" class="panel-light hidden">
+    <div class="lookup-inner">
+      <!-- Computer SVG decorations -->
+      <div class="lookup-deco">
+        <svg width="90" height="70" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="5" y="4" width="80" height="50" rx="5" stroke="#1e3a8a" stroke-width="3" fill="none"/>
+          <rect x="12" y="11" width="66" height="36" rx="2" fill="#1e3a8a" opacity="0.3"/>
+          <line x1="30" y1="54" x2="60" y2="54" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round"/>
+          <rect x="20" y="57" width="50" height="8" rx="3" fill="#1e3a8a" opacity="0.4"/>
+          <line x1="20" y1="20" x2="50" y2="20" stroke="#fff" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/>
+          <line x1="20" y1="26" x2="45" y2="26" stroke="#fff" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+          <line x1="20" y1="32" x2="55" y2="32" stroke="#fff" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+        </svg>
+        <svg width="70" height="80" viewBox="0 0 70 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="4" width="54" height="72" rx="6" stroke="#4c1d95" stroke-width="3" fill="none"/>
+          <rect x="14" y="14" width="42" height="52" rx="2" fill="#4c1d95" opacity="0.2"/>
+          <circle cx="35" cy="75" r="3" fill="#4c1d95" opacity="0.5"/>
+          <line x1="18" y1="22" x2="44" y2="22" stroke="#fff" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+          <line x1="18" y1="29" x2="38" y2="29" stroke="#fff" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+          <line x1="18" y1="36" x2="42" y2="36" stroke="#fff" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+          <line x1="18" y1="43" x2="36" y2="43" stroke="#fff" stroke-width="1.5" opacity="0.35" stroke-linecap="round"/>
+        </svg>
+        <svg width="80" height="65" viewBox="0 0 80 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="72" height="44" rx="4" stroke="#1e3a8a" stroke-width="2.5" fill="none"/>
+          <rect x="10" y="10" width="60" height="32" rx="2" fill="#1e3a8a" opacity="0.2"/>
+          <rect x="28" y="48" width="24" height="6" rx="2" fill="#1e3a8a" opacity="0.35"/>
+          <rect x="14" y="54" width="52" height="7" rx="3" fill="#1e3a8a" opacity="0.25"/>
+          <rect x="14" y="15" width="10" height="8" rx="1" fill="#fff" opacity="0.3"/>
+          <rect x="30" y="15" width="10" height="8" rx="1" fill="#fff" opacity="0.3"/>
+          <rect x="46" y="15" width="10" height="8" rx="1" fill="#fff" opacity="0.3"/>
+          <line x1="14" y1="30" x2="52" y2="30" stroke="#fff" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+          <line x1="14" y1="36" x2="44" y2="36" stroke="#fff" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="lookup-content">
+        <div class="panel-title-light" style="justify-content:center">SR Number Lookup</div>
+        <div class="alert alert-err" id="lookup-err">⚠ SR Number not found. Please check and try again.</div>
+        <div class="form-group">
+          <label>Your SR Number</label>
+          <input type="text" id="student-serial" placeholder="e.g. ADC-001" onkeydown="if(event.key==='Enter') lookupSerial()">
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="lookupSerial()">View Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREMIUM REPORT CARD -->
+  <div id="view-report" class="hidden">
+    <div class="rc-wrapper" id="report-printable">
+
+      <!-- Header with computer decorations on right -->
+      <div class="rc-header">
+        <!-- Computer images on right side -->
+        <div class="rc-header-computers">
+          <svg width="70" height="55" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="4" width="80" height="50" rx="5" stroke="#fff" stroke-width="3" fill="none"/>
+            <rect x="12" y="11" width="66" height="36" rx="2" fill="#fff" opacity="0.4"/>
+            <line x1="30" y1="54" x2="60" y2="54" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <rect x="20" y="57" width="50" height="8" rx="3" fill="#fff" opacity="0.5"/>
+            <line x1="20" y1="20" x2="50" y2="20" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
+            <line x1="20" y1="27" x2="45" y2="27" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
+            <line x1="20" y1="34" x2="58" y2="34" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg width="55" height="65" viewBox="0 0 70 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="4" width="54" height="72" rx="6" stroke="#fff" stroke-width="3" fill="none"/>
+            <rect x="14" y="14" width="42" height="52" rx="2" fill="#fff" opacity="0.3"/>
+            <circle cx="35" cy="75" r="3" fill="#fff" opacity="0.6"/>
+            <line x1="18" y1="22" x2="44" y2="22" stroke="#4c1d95" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="29" x2="38" y2="29" stroke="#4c1d95" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="36" x2="42" y2="36" stroke="#4c1d95" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg width="65" height="50" viewBox="0 0 80 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="72" height="44" rx="4" stroke="#fff" stroke-width="2.5" fill="none"/>
+            <rect x="10" y="10" width="60" height="32" rx="2" fill="#fff" opacity="0.25"/>
+            <rect x="28" y="48" width="24" height="6" rx="2" fill="#fff" opacity="0.4"/>
+            <rect x="14" y="54" width="52" height="7" rx="3" fill="#fff" opacity="0.3"/>
+            <rect x="14" y="15" width="10" height="8" rx="1" fill="#4c1d95" opacity="0.5"/>
+            <rect x="30" y="15" width="10" height="8" rx="1" fill="#4c1d95" opacity="0.5"/>
+            <rect x="46" y="15" width="10" height="8" rx="1" fill="#4c1d95" opacity="0.5"/>
+          </svg>
+        </div>
+
+        <div class="rc-header-inner">
+          <div class="rc-header-icon">🎓</div>
+          <div class="rc-header-text">
+            <p class="rc-header-title">RESULT CARD</p>
+            <p class="rc-header-sub">Student Performance Report</p>
+          </div>
+        </div>
+        <div style="margin-top:14px;position:relative;z-index:1;">
+          <div class="rc-serial-strip">
+            <div class="rc-serial-dot"></div>
+            <span class="rc-serial-label">SR:</span>
+            <span class="rc-serial-val" id="r-serial">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="rc-body">
+
+        <div class="rc-section">
+          <div class="rc-info-card">
+            <div class="rc-section-lbl"><i class="fa-solid fa-user"></i> Student name</div>
+            <div class="rc-name-row">
+              <p class="rc-student-name" id="r-name">—</p>
+              <span class="rc-date-badge"><i class="fa-solid fa-calendar-days"></i> <span id="r-date">—</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-section">
+          <div class="rc-info-card">
+            <div class="rc-section-lbl"><i class="fa-solid fa-book-open"></i> Task / Course</div>
+            <p class="rc-val" id="r-task">—</p>
+          </div>
+        </div>
+
+        <div class="rc-section">
+          <div class="rc-info-card">
+            <div class="rc-section-lbl"><i class="fa-solid fa-note-sticky"></i> Notes / Remarks</div>
+            <p class="rc-notes-val" id="r-notes">—</p>
+          </div>
+        </div>
+
+        <div class="rc-section">
+          <div class="rc-info-card">
+            <div class="rc-section-lbl"><i class="fa-solid fa-circle-check"></i> Status</div>
+            <div class="rc-status-row">
+              <span class="rc-badge rb-complete" id="r-status-badge">✔ Completed</span>
+              <span class="rc-badge rb-pass" id="r-result-badge">🏆 PASS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-stats-grid">
+          <div class="rc-stat"><div class="rc-stat-icon">⭐</div><div class="rc-stat-num" id="r-points">—</div><div class="rc-stat-lbl">Points</div></div>
+          <div class="rc-stat"><div class="rc-stat-icon">❌</div><div class="rc-stat-num" id="r-wrong">—</div><div class="rc-stat-lbl">Wrong answers</div></div>
+          <div class="rc-stat"><div class="rc-stat-icon">📚</div><div class="rc-stat-num" id="r-total">—</div><div class="rc-stat-lbl">Total questions</div></div>
+          <div class="rc-stat"><div class="rc-stat-icon">📈</div><div class="rc-stat-num" id="r-pct">—</div><div class="rc-stat-lbl">Percentage</div></div>
+        </div>
+
+        <div class="rc-stars-card">
+          <div class="rc-stars-lbl"><i class="fa-solid fa-star"></i> Performance rating</div>
+          <div class="rc-stars-row" id="r-stars-row"></div>
+          <div class="rc-stars-num" id="r-stars-num">—</div>
+        </div>
+
+        <!-- Result banner with computer watermarks inside -->
+        <div class="rc-result-banner pass-bg" id="r-result-banner">
+          <div class="rc-banner-computers" id="r-banner-computers">
+            <svg width="60" height="47" viewBox="0 0 90 70" fill="none"><rect x="5" y="4" width="80" height="50" rx="5" stroke="currentColor" stroke-width="3" fill="none"/><rect x="12" y="11" width="66" height="36" rx="2" fill="currentColor" opacity="0.35"/><line x1="30" y1="54" x2="60" y2="54" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="20" y="57" width="50" height="8" rx="3" fill="currentColor" opacity="0.4"/></svg>
+            <svg width="46" height="54" viewBox="0 0 70 80" fill="none"><rect x="8" y="4" width="54" height="72" rx="6" stroke="currentColor" stroke-width="3" fill="none"/><rect x="14" y="14" width="42" height="52" rx="2" fill="currentColor" opacity="0.25"/><circle cx="35" cy="75" r="3" fill="currentColor" opacity="0.5"/></svg>
+            <svg width="56" height="44" viewBox="0 0 80 65" fill="none"><rect x="4" y="4" width="72" height="44" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="10" y="10" width="60" height="32" rx="2" fill="currentColor" opacity="0.2"/><rect x="28" y="48" width="24" height="6" rx="2" fill="currentColor" opacity="0.35"/><rect x="14" y="54" width="52" height="7" rx="3" fill="currentColor" opacity="0.25"/></svg>
+          </div>
+          <div class="rc-result-icon" id="r-result-icon">🏆</div>
+          <p class="rc-result-title" id="r-result-title">PASSED</p>
+          <p class="rc-result-sub" id="r-result-sub">Excellent performance! Keep it up.</p>
+          <div class="rc-perf-label perf-excellent" id="r-perf-label">⭐ Excellent Work</div>
+        </div>
+
+        <div class="rc-signature">
+          <div>
+            <div class="sig-issued">Issued &amp; Authorized by</div>
+            <div class="sig-name">Ahmed Kiyani</div>
+            <div class="sig-phone">0317-7528186</div>
+          </div>
+          <div class="sig-stamp">AHMED<br>DIGITAL<br>COURSE<br>✦</div>
+        </div>
+
+        <!-- Test Progress Image -->
+        <div class="rc-img-section" id="r-img-section" style="display:none;">
+          <div class="rc-info-card" style="padding:10px;">
+            <div class="rc-section-lbl" style="margin-bottom:8px;"><i class="fa-solid fa-image"></i> Test Progress Image</div>
+            <img id="r-student-img" src="" alt="Test Progress" class="rc-img-thumb" onclick="openLightbox(this.src)">
+            <div class="rc-img-hint">👆 Click karein full size dekhne ke liye</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn btn-gold" onclick="window.print()">⬇ Save / Print</button>
+      <button class="btn btn-primary" onclick="backToLookup()">← New Search</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()" title="Close">✕</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Student image">
+  <div class="lightbox-actions">
+    <button class="btn btn-gold" onclick="downloadLightboxImg()">⬇ Download Image</button>
+    <button class="btn btn-danger" onclick="closeLightbox()">✕ Close</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span class="f-name">Ahmed Kiyani</span><br>
+  <span class="f-phone">0317-7528186</span>
+</footer>
+
+<script>
+/* Canvas */
+(function(){
+  var c=document.getElementById('tech-canvas');
+  var ctx=c.getContext('2d');
+  var W,H,particles=[],lines=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  function mkP(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.35,vy:(Math.random()-0.5)*0.35,r:Math.random()*1.5+0.4,a:Math.random()*0.5+0.1};}
+  for(var i=0;i<55;i++)particles.push(mkP());
+  function mkL(){var h=Math.random()>0.5;return{horiz:h,pos:Math.random()*(h?H:W),start:Math.random()*(h?W:H),len:60+Math.random()*160,speed:0.4+Math.random()*0.8,a:0.08+Math.random()*0.18};}
+  for(var j=0;j<10;j++)lines.push(mkL());
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    lines.forEach(function(l){
+      ctx.save();
+      var g=l.horiz?ctx.createLinearGradient(l.start,0,l.start+l.len,0):ctx.createLinearGradient(0,l.start,0,l.start+l.len);
+      g.addColorStop(0,'rgba(0,212,255,0)');g.addColorStop(0.5,'rgba(0,212,255,'+l.a+')');g.addColorStop(1,'rgba(0,212,255,0)');
+      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.beginPath();
+      if(l.horiz){ctx.moveTo(l.start,l.pos);ctx.lineTo(l.start+l.len,l.pos);}
+      else{ctx.moveTo(l.pos,l.start);ctx.lineTo(l.pos,l.start+l.len);}
+      ctx.stroke();ctx.restore();
+      l.start+=l.speed;
+      if(l.horiz&&l.start>W+l.len)l.start=-l.len;
+      if(!l.horiz&&l.start>H+l.len)l.start=-l.len;
+    });
+    ctx.fillStyle='rgba(0,212,255,0.6)';
+    particles.forEach(function(p){
+      ctx.save();ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+    });
+    for(var a=0;a<particles.length;a++){
+      for(var b=a+1;b<particles.length;b++){
+        var dx=particles[a].x-particles[b].x,dy=particles[a].y-particles[b].y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<100){ctx.save();ctx.globalAlpha=(1-dist/100)*0.12;ctx.strokeStyle='rgba(0,212,255,1)';ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(particles[a].x,particles[a].y);ctx.lineTo(particles[b].x,particles[b].y);ctx.stroke();ctx.restore();}
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+var records={};
+try{records=JSON.parse(localStorage.getItem('adc_records')||'{}');}catch(e){}
+var isAdmin=false;
+var currentFilter='all';
+var currentImageData='';
+
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-'+tab).classList.add('active');
+  hideAll();
+  if(tab==='admin'){document.getElementById(isAdmin?'view-admin-dashboard':'view-admin-login').classList.remove('hidden');}
+  else{document.getElementById('view-student-lookup').classList.remove('hidden');}
+}
+function hideAll(){['view-admin-login','view-admin-dashboard','view-student-lookup','view-report'].forEach(function(id){document.getElementById(id).classList.add('hidden');});}
+
+function adminLogin(){
+  var btn=document.getElementById('login-btn');
+  var pw=document.getElementById('admin-pass').value;
+  if(btn.classList.contains('success-state'))return;
+  if(pw==='Ahmed6622'){
+    show('login-err',false);btn.classList.add('success-state');
+    setTimeout(function(){
+      isAdmin=true;
+      document.getElementById('view-admin-login').classList.add('hidden');
+      document.getElementById('view-admin-dashboard').classList.remove('hidden');
+      btn.classList.remove('success-state');
+      renderList();updateStats();
+    },700);
+  }else{
+    show('login-err',true);document.getElementById('admin-pass').value='';
+    btn.classList.add('error-shake');setTimeout(function(){btn.classList.remove('error-shake');},500);
+  }
+}
+function adminLogout(){isAdmin=false;document.getElementById('view-admin-dashboard').classList.add('hidden');document.getElementById('view-admin-login').classList.remove('hidden');document.getElementById('admin-pass').value='';}
+
+function checkExisting(){
+  var serial=document.getElementById('f-serial').value.trim().toUpperCase();
+  var notice=document.getElementById('update-notice');
+  if(serial&&records[serial]){document.getElementById('editing-sr').textContent=serial;notice.classList.add('show');}
+  else notice.classList.remove('show');
+}
+
+function saveRecord(){
+  var serial=document.getElementById('f-serial').value.trim().toUpperCase();
+  var name=document.getElementById('f-name').value.trim();
+  if(!serial||!name){show('save-err',true);show('save-ok',false);return;}
+  var existingImg=(records[serial]&&records[serial].image)||'';
+  records[serial]={
+    serial:serial,name:name,
+    date:document.getElementById('f-date').value,
+    task:document.getElementById('f-task').value.trim(),
+    notes:document.getElementById('f-notes').value.trim(),
+    status:document.getElementById('f-status').value,
+    result:document.getElementById('f-result').value,
+    points:document.getElementById('f-points').value,
+    wrong:document.getElementById('f-wrong').value,
+    total:document.getElementById('f-total').value,
+    stars:document.getElementById('f-stars').value,
+    image:currentImageData||existingImg,
+  };
+  localStorage.setItem('adc_records',JSON.stringify(records));
+  show('save-ok',true);show('save-err',false);
+  document.getElementById('update-notice').classList.remove('show');
+  setTimeout(function(){show('save-ok',false);},2500);
+  renderList();updateStats();
+}
+
+function clearForm(){
+  ['f-serial','f-name','f-date','f-task','f-notes','f-points','f-wrong','f-total'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('f-status').value='complete';
+  document.getElementById('f-result').value='pass';
+  document.getElementById('f-stars').value='5';
+  document.getElementById('update-notice').classList.remove('show');
+  show('save-ok',false);show('save-err',false);
+  removeImage();
+}
+function show(id,v){document.getElementById(id).classList[v?'add':'remove']('show');}
+
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(el)el.classList.add('active');
+  renderList();
+}
+
+function renderList(){
+  var el=document.getElementById('admin-list');
+  var search=(document.getElementById('admin-search')||{}).value||'';
+  var sort=(document.getElementById('admin-sort')||{}).value||'default';
+  var keys=Object.keys(records);
+  keys=keys.filter(function(k){
+    var r=records[k];
+    if(currentFilter==='complete')return r.status==='complete';
+    if(currentFilter==='incomplete')return r.status==='incomplete';
+    return true;
+  });
+  if(search.trim()){var q=search.trim().toUpperCase();keys=keys.filter(function(k){return records[k].name.toUpperCase().includes(q)||k.includes(q);});}
+  keys.sort(function(a,b){
+    if(sort==='name')return records[a].name.localeCompare(records[b].name);
+    if(sort==='date')return(records[b].date||'').localeCompare(records[a].date||'');
+    if(sort==='score')return(parseFloat(records[b].points)||0)-(parseFloat(records[a].points)||0);
+    return 0;
+  });
+  if(!keys.length){el.innerHTML='<div class="no-records-msg"><div class="icon">◈</div>No records found.</div>';return;}
+  el.innerHTML=keys.map(function(k,idx){
+    var r=records[k];
+    var pts=parseFloat(r.points)||0,tot=parseFloat(r.total)||100;
+    var pct=Math.min(100,Math.round((pts/tot)*100));
+    var isPass=r.result==='pass',isFail=r.result==='fail';
+    var initial=(r.name||'?').charAt(0).toUpperCase();
+    var badge=isFail?'<span class="s-card-badge badge-fail">FAIL</span>':isPass?'<span class="s-card-badge badge-pass">PASS</span>':'<span class="s-card-badge badge-pending">—</span>';
+    var fillCls=isFail?' fail':'';
+    var delay=Math.min(idx*0.05,0.5);
+    var imgHtml=r.image?'<img class="s-card-img-thumb" src="'+r.image+'" alt="Test Progress" onclick="event.stopPropagation();openLightbox(\''+r.image+'\')">':'';
+    return '<div class="s-card" id="card-'+k+'" onclick="toggleCard(\''+k+'\')" style="animation-delay:'+delay+'s">'
+      +'<div class="s-card-header"><div class="s-avatar">'+initial+'</div>'
+      +'<div class="s-card-info"><div class="s-card-name">'+r.name+'</div><div class="s-card-serial">'+r.serial+'</div></div>'
+      +badge+'</div>'
+      +'<div class="s-card-body">'
+      +'<div class="s-card-course">'+(r.task||'No course assigned')+'</div>'
+      +'<div class="s-progress-wrap"><div class="s-progress-top"><span>Score</span><span>'+pct+'%</span></div>'
+      +'<div class="s-progress-bar"><div class="s-progress-fill'+fillCls+'" style="width:'+pct+'%"></div></div></div>'
+      +'<div class="s-card-date">'+(r.date||'No date')+'</div>'
+      +'</div>'
+      +'<div class="s-expand" id="expand-'+k+'">'
+      +'<div class="s-expand-inner">'
+      +imgHtml
+      +'<div class="s-detail-grid">'
+      +'<div><div class="s-detail-label">Points</div><div class="s-detail-val">'+(r.points||'—')+'</div></div>'
+      +'<div><div class="s-detail-label">Wrong</div><div class="s-detail-val">'+(r.wrong||'—')+'</div></div>'
+      +'<div><div class="s-detail-label">Total Q</div><div class="s-detail-val">'+(r.total||'—')+'</div></div>'
+      +'<div><div class="s-detail-label">Stars</div><div class="s-detail-val">'+'⭐'.repeat(parseInt(r.stars)||5)+'</div></div>'
+      +'<div><div class="s-detail-label">Status</div><div class="s-detail-val">'+(r.status||'—')+'</div></div>'
+      +'<div><div class="s-detail-label">Result</div><div class="s-detail-val">'+(r.result||'—').toUpperCase()+'</div></div>'
+      +'</div>'
+      +'<div style="margin-bottom:12px"><div class="s-detail-label">Remarks</div><div class="s-detail-val" style="white-space:pre-wrap">'+(r.notes||'—')+'</div></div>'
+      +'<div class="s-expand-btns">'
+      +'<button class="btn btn-primary" style="padding:7px 16px;font-size:0.7rem" onclick="event.stopPropagation();loadRecord(\''+k+'\')">✏ Edit</button>'
+      +'<button class="btn btn-danger" style="padding:7px 16px;font-size:0.7rem" onclick="event.stopPropagation();delRecord(\''+k+'\')">✕ Delete</button>'
+      +'</div></div></div></div>';
+  }).join('');
+}
+
+function toggleCard(k){var exp=document.getElementById('expand-'+k);if(exp)exp.classList.toggle('open');}
+
+function loadRecord(k){
+  var r=records[k];
+  document.getElementById('f-serial').value=r.serial;
+  document.getElementById('f-name').value=r.name;
+  document.getElementById('f-date').value=r.date||'';
+  document.getElementById('f-task').value=r.task||'';
+  document.getElementById('f-notes').value=r.notes||'';
+  document.getElementById('f-status').value=r.status||'complete';
+  document.getElementById('f-result').value=r.result||'pass';
+  document.getElementById('f-points').value=r.points||'';
+  document.getElementById('f-wrong').value=r.wrong||'';
+  document.getElementById('f-total').value=r.total||'';
+  document.getElementById('f-stars').value=r.stars||'5';
+  document.getElementById('editing-sr').textContent=r.serial;
+  document.getElementById('update-notice').classList.add('show');
+  if(r.image){currentImageData=r.image;document.getElementById('img-preview').src=r.image;document.getElementById('img-preview-wrap').style.display='block';}
+  else{removeImage();}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function delRecord(k){
+  if(confirm('Delete record for '+records[k].name+'?')){
+    delete records[k];localStorage.setItem('adc_records',JSON.stringify(records));renderList();updateStats();
+  }
+}
+
+function updateStats(){
+  var keys=Object.keys(records);
+  document.getElementById('s-total').textContent=keys.length;
+  document.getElementById('s-pass').textContent=keys.filter(function(k){return records[k].result==='pass';}).length;
+  document.getElementById('s-fail').textContent=keys.filter(function(k){return records[k].result==='fail';}).length;
+  document.getElementById('s-pend').textContent=keys.filter(function(k){return !records[k].result;}).length;
+}
+
+function lookupSerial(){
+  var serial=document.getElementById('student-serial').value.trim().toUpperCase();
+  if(records[serial]){
+    show('lookup-err',false);fillReport(records[serial]);
+    document.getElementById('view-student-lookup').classList.add('hidden');
+    document.getElementById('view-report').classList.remove('hidden');
+  }else{show('lookup-err',true);}
+}
+
+function fillReport(r){
+  document.getElementById('r-serial').textContent=r.serial;
+  document.getElementById('r-name').textContent=r.name||'—';
+  var dEl=document.getElementById('r-date');
+  if(r.date){try{var d=new Date(r.date+'T00:00:00');dEl.textContent=d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}catch(e){dEl.textContent=r.date;}}
+  else{dEl.textContent='—';}
+  document.getElementById('r-task').textContent=r.task||'—';
+  document.getElementById('r-notes').textContent=r.notes||'—';
+
+  var sb=document.getElementById('r-status-badge');
+  if(r.status==='complete'){sb.className='rc-badge rb-complete';sb.textContent='✔ Completed';}
+  else{sb.className='rc-badge rb-pending';sb.textContent='⏳ Pending';}
+
+  var rb=document.getElementById('r-result-badge');
+  if(r.result==='pass'){rb.className='rc-badge rb-pass';rb.textContent='🏆 PASS';}
+  else{rb.className='rc-badge rb-fail';rb.textContent='✘ FAIL';}
+
+  var pts=parseFloat(r.points)||0,tot=parseFloat(r.total)||0;
+  document.getElementById('r-points').textContent=r.points||'—';
+  document.getElementById('r-wrong').textContent=r.wrong||'—';
+  document.getElementById('r-total').textContent=r.total||'—';
+  document.getElementById('r-pct').textContent=(pts>0&&tot>0)?Math.round((pts/tot)*100)+'%':'—';
+
+  var s=Math.min(5,Math.max(1,parseInt(r.stars)||5));
+  var starsRow=document.getElementById('r-stars-row');
+  starsRow.innerHTML='';
+  for(var i=1;i<=5;i++){var sp=document.createElement('span');sp.className='rc-star '+(i<=s?'filled':'empty');sp.textContent='★';starsRow.appendChild(sp);}
+  document.getElementById('r-stars-num').textContent=s+'.0 / 5.0';
+
+  /* Result banner */
+  var banner=document.getElementById('r-result-banner');
+  var icon=document.getElementById('r-result-icon');
+  var title=document.getElementById('r-result-title');
+  var sub=document.getElementById('r-result-sub');
+  var perf=document.getElementById('r-perf-label');
+  var computers=document.getElementById('r-banner-computers');
+
+  if(r.result==='pass'){
+    banner.className='rc-result-banner pass-bg';
+    icon.textContent='🏆';title.textContent='PASSED';sub.textContent='Excellent performance! Keep it up.';
+    computers.style.color='#065f46';
+  }else{
+    banner.className='rc-result-banner fail-bg';
+    icon.textContent='📋';title.textContent='FAILED';sub.textContent='Better luck next time. Keep practicing!';
+    computers.style.color='#991b1b';
+  }
+
+  /* Performance label: 4+ stars = Excellent Work, else BAD Work */
+  if(s>=4){perf.className='rc-perf-label perf-excellent';perf.textContent='⭐ Excellent Work';}
+  else{perf.className='rc-perf-label perf-bad';perf.textContent='⚠ BAD Work';}
+
+  /* Image */
+  var imgSec=document.getElementById('r-img-section');
+  var imgEl=document.getElementById('r-student-img');
+  if(r.image){imgEl.src=r.image;imgSec.style.display='block';}
+  else{imgSec.style.display='none';imgEl.src='';}
+}
+
+function backToLookup(){
+  document.getElementById('view-report').classList.add('hidden');
+  document.getElementById('view-student-lookup').classList.remove('hidden');
+  document.getElementById('student-serial').value='';
+  show('lookup-err',false);
+}
+
+/* Image helpers */
+function previewImage(input){
+  if(!input.files||!input.files[0])return;
+  var file=input.files[0];
+  if(file.size>5*1024*1024){alert('Image too large. Please use an image under 5MB.');input.value='';return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    currentImageData=e.target.result;
+    document.getElementById('img-preview').src=currentImageData;
+    document.getElementById('img-preview-wrap').style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+function removeImage(){
+  currentImageData='';
+  document.getElementById('f-image').value='';
+  document.getElementById('img-preview').src='';
+  document.getElementById('img-preview-wrap').style.display='none';
+}
+
+/* Lightbox */
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+function closeLightboxOnBg(e){if(e.target===document.getElementById('lightbox'))closeLightbox();}
+function downloadLightboxImg(){
+  var src=document.getElementById('lightbox-img').src;
+  var a=document.createElement('a');a.href=src;a.download='test-progress.jpg';a.click();
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
+
+/* Init */
+document.getElementById('f-date').valueAsDate=new Date();
+updateStats();
+</script>
+</body>
+</html>

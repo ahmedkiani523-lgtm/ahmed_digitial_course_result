@@ -672,6 +672,36 @@ body::before{content:'';position:fixed;inset:0;z-index:1;background-image:linear
   <span class="f-phone">0317-7528186</span>
 </footer>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWXGIOab7W_zY-JTNZeXUkSgeGDcyXH-w",
+    authDomain: "ahmed-digital-course1.firebaseapp.com",
+    projectId: "ahmed-digital-course1",
+    storageBucket: "ahmed-digital-course1.firebasestorage.app",
+    messagingSenderId: "692308445965",
+    appId: "1:692308445965:web:e6064725df5b69a5177e44",
+    measurementId: "G-8KPVR5PZSL"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const recordsDocRef = doc(db, "adc", "records");
+
+  window.fbGetRecords = async function(){
+    var snap = await getDoc(recordsDocRef);
+    if(snap.exists()){
+      return snap.data().data || '{}';
+    }
+    return '{}';
+  };
+
+  window.fbSetRecords = async function(jsonString){
+    await setDoc(recordsDocRef, { data: jsonString });
+  };
+</script>
 <script>
 /* Canvas */
 (function(){
@@ -724,10 +754,10 @@ var storageReady=false;
 
 async function loadRecords(){
   try{
-    var res=await window.storage.get('adc_records',true);
-    if(res&&res.value){records=JSON.parse(res.value);}
+    var jsonStr=await window.fbGetRecords();
+    records=JSON.parse(jsonStr||'{}');
   }catch(e){
-    /* key may not exist yet, or storage unavailable: fall back to localStorage migration */
+    console.error('Firestore load failed, falling back to localStorage',e);
     try{var old=localStorage.getItem('adc_records');if(old)records=JSON.parse(old);}catch(e2){}
   }
   storageReady=true;
@@ -737,9 +767,9 @@ async function loadRecords(){
 
 async function persistRecords(){
   try{
-    await window.storage.set('adc_records',JSON.stringify(records),true);
+    await window.fbSetRecords(JSON.stringify(records));
   }catch(e){
-    console.error('Storage save failed, falling back to localStorage',e);
+    console.error('Firestore save failed, falling back to localStorage',e);
     try{localStorage.setItem('adc_records',JSON.stringify(records));}catch(e2){}
   }
 }
@@ -1030,7 +1060,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbo
 
 /* Init */
 document.getElementById('f-date').valueAsDate=new Date();
-loadRecords();
+window.addEventListener('load',loadRecords);
 </script>
 </body>
 </html>

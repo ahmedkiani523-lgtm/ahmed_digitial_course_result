@@ -717,10 +717,32 @@ body::before{content:'';position:fixed;inset:0;z-index:1;background-image:linear
 })();
 
 var records={};
-try{records=JSON.parse(localStorage.getItem('adc_records')||'{}');}catch(e){}
 var isAdmin=false;
 var currentFilter='all';
 var currentImageData='';
+var storageReady=false;
+
+async function loadRecords(){
+  try{
+    var res=await window.storage.get('adc_records',true);
+    if(res&&res.value){records=JSON.parse(res.value);}
+  }catch(e){
+    /* key may not exist yet, or storage unavailable: fall back to localStorage migration */
+    try{var old=localStorage.getItem('adc_records');if(old)records=JSON.parse(old);}catch(e2){}
+  }
+  storageReady=true;
+  updateStats();
+  if(isAdmin)renderList();
+}
+
+async function persistRecords(){
+  try{
+    await window.storage.set('adc_records',JSON.stringify(records),true);
+  }catch(e){
+    console.error('Storage save failed, falling back to localStorage',e);
+    try{localStorage.setItem('adc_records',JSON.stringify(records));}catch(e2){}
+  }
+}
 
 function switchTab(tab){
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
@@ -758,7 +780,7 @@ function checkExisting(){
   else notice.classList.remove('show');
 }
 
-function saveRecord(){
+async function saveRecord(){
   var serial=document.getElementById('f-serial').value.trim().toUpperCase();
   var name=document.getElementById('f-name').value.trim();
   if(!serial||!name){show('save-err',true);show('save-ok',false);return;}
@@ -776,7 +798,7 @@ function saveRecord(){
     stars:document.getElementById('f-stars').value,
     image:currentImageData||existingImg,
   };
-  localStorage.setItem('adc_records',JSON.stringify(records));
+  await persistRecords();
   show('save-ok',true);show('save-err',false);
   document.getElementById('update-notice').classList.remove('show');
   setTimeout(function(){show('save-ok',false);},2500);
@@ -881,9 +903,9 @@ function loadRecord(k){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function delRecord(k){
+async function delRecord(k){
   if(confirm('Delete record for '+records[k].name+'?')){
-    delete records[k];localStorage.setItem('adc_records',JSON.stringify(records));renderList();updateStats();
+    delete records[k];await persistRecords();renderList();updateStats();
   }
 }
 
@@ -896,6 +918,9 @@ function updateStats(){
 }
 
 function lookupSerial(){
+  var errEl=document.getElementById('lookup-err');
+  if(!storageReady){errEl.textContent='Please wait, loading data...';show('lookup-err',true);return;}
+  errEl.textContent='⚠ SR Number not found. Please check and try again.';
   var serial=document.getElementById('student-serial').value.trim().toUpperCase();
   if(records[serial]){
     show('lookup-err',false);fillReport(records[serial]);
@@ -1005,7 +1030,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbo
 
 /* Init */
 document.getElementById('f-date').valueAsDate=new Date();
-updateStats();
+loadRecords();
 </script>
 </body>
 </html>
